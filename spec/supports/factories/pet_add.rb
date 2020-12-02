@@ -8,5 +8,21 @@ FactoryBot.define do
             photoUrls {["https://br-support.files.wordpress.com/2018/07/add-media-pt-br2.png"]}
             tags{[attributes_for(:Tags)]}
             status {"available"}
+            
+            trait :status_sold do
+                status {"sold"}
+                
+            end
+
+            trait :status_pending do
+                status {"pending"}
+                
+            end
+
+
+            factory :attr_status_sold, traits: [:status_sold]
+            factory :attr_status_pending, traits: [:status_pending]
         end
+        
+        
 end

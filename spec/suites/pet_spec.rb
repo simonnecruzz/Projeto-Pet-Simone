@@ -5,13 +5,26 @@ describe "Pets store" do
     let(:dados_pet) { attributes_for(:Addpet) }
 
     context "Adicionar Pet"do
-            it "Adicionar um novo pet" do
+        it "Adicionar um novo pet" do
             result = pet_chamadas.pet_add(dados_pet)
             dados_pet[:id] = result['id']
             expect(result.code).to eq(200)
             expect(result["name"]).to eq(dados_pet[:name])
             expect(result["id"]).to eq(dados_pet[:id])
         end
+        it "Adiconar pet com status sold" do
+            status_novo =  attributes_for(:Addpet, :status_sold)
+            result = pet_chamadas.pet_add(status_novo)
+            expect(result.code).to eq(200)
+            expect(result['status']).to eq('sold')
+        end
+        it "Adiconar pet com status pendig" do
+            status_novo =  attributes_for(:attr_status_pending)
+            result = pet_chamadas.pet_add(status_novo)
+            expect(result.code).to eq(200)
+            expect(result['status']).to eq('pending')
+        end
+        
     end
     context "Buscar Pet"do
         it "buscar pet por id"do
@@ -21,7 +34,7 @@ describe "Pets store" do
             expect(result_ge_id.code).to eq(200)
             expect(result_ge_id["id"]).to eq(dados_pet[:id])
         end
-        it "buscar id inválid"do #* Dando merda
+        it "buscar id inválid"do #* Dando merda tive que fazer de outro
             result = pet_chamadas.pet_add(dados_pet)
             result_ge_id = pet_chamadas.pet_get_idi(922337203685477580)
             expect(result_ge_id['message']).to eq("message")
@@ -38,7 +51,7 @@ describe "Pets store" do
         
     end
     context "Atualizar pet" do
-        it "Atualizar dados do cadastro do pet form"do
+        it "Atualizar dados do pet via formulario"do
             result = pet_chamadas.pet_add(dados_pet)
             result_atualiza = pet_chamadas.pet_update_id(result['id'],"simone_Editado", "pending")
             result_ge_id = pet_chamadas.pet_get_id(result['id'])
@@ -48,15 +61,31 @@ describe "Pets store" do
             expect(result_ge_id['status']).to eq("pending")
         end
 
-        it "Atualizar dados pet "do
+        it "Atualizar nome e id do pet "do
             result = pet_chamadas.pet_add(dados_pet)
-            dados_pet[:id] = result['id']
             dados_pet[:name] = "Simoneok"
             dados_pet[:id] = 1236
             result_atualiza_put = pet_chamadas.pet_updare_put(dados_pet)
             expect(result_atualiza_put.code).to eq(200)
             expect(result_atualiza_put['name']).to eq('Simoneok')
             expect(result_atualiza_put['id']).to eq(1236)
+        end
+
+        it "Atualizar id da categoria do pet "do
+            result = pet_chamadas.pet_add(dados_pet)
+            novoid_cat = dados_pet[:category][:id] = Faker::Number.number(digits: 5)
+            result_atualiza_put = pet_chamadas.pet_updare_put(dados_pet)
+            expect(result_atualiza_put.code).to eq(200)
+            expect(result_atualiza_put["category"]["id"]).to eq(novoid_cat)
+            
+        end
+
+        it "Atualizar nome da categoria do pet "do
+            result = pet_chamadas.pet_add(dados_pet)
+            novo_nome_cat = dados_pet[:category][:name] = Faker::Name.first_name
+            result_atualiza_put = pet_chamadas.pet_updare_put(dados_pet)
+            expect(result_atualiza_put.code).to eq(200)
+            expect(result_atualiza_put["category"]["name"]).to eq(novo_nome_cat)
         end
     end
     context "Delete Pet"do
@@ -71,7 +100,7 @@ describe "Pets store" do
         xit "Deletar um pet por id inválido" do
             result = pet_chamadas.pet_add(dados_pet)
             dados_pet[:id] = result['id']
-            puts dados_pet[:id] = 1237
+            puts dados_pet[:id] = 12370
             puts result_delete = pet_chamadas.delete_pet_id(dados_pet[:id])
             expect(result_delete.code).to eq(404)
         end

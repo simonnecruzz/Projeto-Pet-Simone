@@ -18,13 +18,8 @@ RSpec.configure do |config|
   FactoryBot.definition_file_paths = %w[./spec/supports/factories]
   config.formatter = :documentation
   config.expect_with :rspec do |expectations|
-    expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
   config.before(:suite) { FactoryBot.find_definitions }
-
-  config.mock_with :rspec do |mocks|
-    mocks.verify_partial_doubles = true
-  end
 
 end

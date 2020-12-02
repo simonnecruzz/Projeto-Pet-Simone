@@ -6,6 +6,7 @@ class PetApi
         request = Net::HTTP::Get.new(url)
         response = https.request(request)
         return response.read_body
+        return response.code
     end
     def pet_add(body)
         uri = "#{ENV['BASE_URI']}/pet"
