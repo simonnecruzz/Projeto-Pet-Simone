@@ -34,10 +34,10 @@ describe "Pets store" do
             expect(result_ge_id.code).to eq(200)
             expect(result_ge_id["id"]).to eq(dados_pet[:id])
         end
-        it "buscar id inválid"do #* Dando merda tive que fazer de outro
+        it "buscar id inválid"do #* Dando merda tive que fazer de outro modo mesmo assim não consigo validar o retorno
             result = pet_chamadas.pet_add(dados_pet)
             result_ge_id = pet_chamadas.pet_get_idi(922337203685477580)
-            expect(result_ge_id['message']).to eq("message")
+            expect(result_ge_id['message']).to eq("message") # Não consegui validar esse retorno de forma correta
             expect(result_ge_id["Pet not found"]).to eq("Pet not found")
         end
         it "buscar status"do
@@ -56,6 +56,7 @@ describe "Pets store" do
             result_atualiza = pet_chamadas.pet_update_id(result['id'],"simone_Editado", "pending")
             result_ge_id = pet_chamadas.pet_get_id(result['id'])
             expect(result_atualiza.code).to eq(200)
+            expect(result['status']).to eq("available")
             expect(result_atualiza['message']).to eq("#{result['id']}")
             expect(result_ge_id['name']).to eq("simone_Editado")
             expect(result_ge_id['status']).to eq("pending")

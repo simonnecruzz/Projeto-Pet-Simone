@@ -5,8 +5,8 @@ class PetApi
         https.use_ssl = true
         request = Net::HTTP::Get.new(url)
         response = https.request(request)
-        return response.read_body
-        return response.code
+        return response.read_body.to_json
+        
     end
     def pet_add(body)
         uri = "#{ENV['BASE_URI']}/pet"
