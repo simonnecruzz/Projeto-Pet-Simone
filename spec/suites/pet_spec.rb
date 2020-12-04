@@ -108,7 +108,6 @@ describe "Pets store" do
 
         xit "Deletar dados da base" do
             result = pet_chamadas.pet_add(dados_pet)
-            puts dados_pet[:id] = result['id']
             result_get = pet_chamadas.pet_get_status(dados_pet[:status])
             puts teste = dados_pet[:id]  = result_get[0]["id"]
             while dados_pet[:id]  <= teste do
