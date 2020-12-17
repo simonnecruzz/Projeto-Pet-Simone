@@ -34,11 +34,13 @@ describe "Pets store" do
             expect(result_ge_id.code).to eq(200)
             expect(result_ge_id["id"]).to eq(dados_pet[:id])
         end
-        it "buscar id inválid"do #* Dando merda tive que fazer de outro modo mesmo assim não consigo validar o retorno
+        it "buscar id inválid"do
             result = pet_chamadas.pet_add(dados_pet)
-            result_ge_id = pet_chamadas.pet_get_idi(922337203685477580)
-            expect(result_ge_id['message']).to eq("message") # Não consegui validar esse retorno de forma correta
-            expect(result_ge_id["Pet not found"]).to eq("Pet not found")
+            result_ge_id = pet_chamadas.pet_get_id(922337203685477580)
+            expect(result_ge_id.code).to eq(404)
+            expect(result_ge_id['message']).to eq("Pet not found") 
+            expect(result_ge_id['type']).to eq("error") 
+            
         end
         it "buscar status"do
             result_add = pet_chamadas.pet_add(dados_pet)
@@ -98,7 +100,7 @@ describe "Pets store" do
             expect(result_delete['message']).to eq("#{dados_pet[:id]}")
         end
 
-        xit "Deletar um pet por id inválido" do
+        it "Deletar um pet por id inválido" do
             result = pet_chamadas.pet_add(dados_pet)
             dados_pet[:id] = result['id']
             puts dados_pet[:id] = 12370
