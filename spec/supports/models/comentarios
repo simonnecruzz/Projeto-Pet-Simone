@@ -1,0 +1,6 @@
+//TODO Comentarios models 
+ 
+* tags_pets e category_pet tem o mesmo modelo, realmente é nescessario ter os dois?
+* nome da Classe poderia ser o mesmo do arquivo.
+* nome de classe não usa _ (Add_pet_model).
+    - Deveria ser assim AddPetModel

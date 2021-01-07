@@ -1,12 +1,12 @@
-require 'faker'
-require 'factory_bot'
-require 'hi_httparty'
-require 'require_relative'
-require 'dotenv'
-require 'net/http'
-require 'uri'
+require "faker"
+require "factory_bot"
+require "hi_httparty"
+#require "require_relative" #//TODO para que vc usaria isso? Faltou adicionar essa gem no gemfile
+require "dotenv"
+require "net/http" #//TODO para que usar esse cara se vc ja usa o HiHTTParty
+require "uri"
 
-Dotenv.load('.env.qa')
+Dotenv.load(".env.qa")
 
 include HiHttparty::RequestsType
 HiHttparty.configure do |config_hihttparty|
@@ -21,5 +21,4 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) { FactoryBot.find_definitions }
-
 end

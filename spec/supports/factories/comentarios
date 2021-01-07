@@ -1,0 +1,10 @@
+//TODO Comentarios Factorys
+
+* category_pet e tags_pet são bem semelhantes, realmente precisa?
+    - Poderia usar um Aliases?
+    - Poderia usar uma trait para mudar o atributo nome (que é o que difere entre as duas)
+
+*factory pet_add
+    - na linha 9, podetia ter usado um atribute_for_list
+
+*Nome da factoria poderia ser o mesmo nome do arquivo
